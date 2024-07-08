@@ -1,0 +1,14 @@
+
+Sandbox Vault/.obsidian/plugins/NewOne/node_modules
+*.ts
+*.mjs
+*.jpg
+Python/testImages/.DS_Store
+Sandbox Vault/.obsidian/plugins/.DS_Store
+Sandbox Vault/.obsidian/.DS_Store
+Sandbox Vault/.DS_Store
+Python/.env
+Python/.DS_Store
+Python/imageCaptionDatabase.json
+*.json
+*.md
