@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
 load_dotenv()
+import json
 import os
+from io import BytesIO
+from PIL import Image
 from flask import Flask, request, jsonify, send_from_directory
 
 
@@ -31,8 +34,7 @@ webhook_url = 'https://41f5-140-82-220-240.ngrok-free.app'
 
 set_webhook(bot_token, webhook_url+'/telegram-webhook')
 
-from io import BytesIO
-from PIL import Image
+
 SAVE_DIRECTORY = "./images"
 BASE_URL = f"https://api.telegram.org/bot{bot_token}/"
 if not os.path.exists(SAVE_DIRECTORY):
