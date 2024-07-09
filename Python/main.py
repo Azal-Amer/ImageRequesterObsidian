@@ -28,7 +28,7 @@ def set_webhook(bot_token, webhook_url):
         print('Error:', response.text)
 
 
-webhook_url = 'https://41f5-140-82-220-240.ngrok-free.app'
+webhook_url = 'https://server.azalamer.com'
 # this needs us to use ngrok, note that we need to find a way to keep this constant, 
 # or push it to my domain url as a subaddress
 
