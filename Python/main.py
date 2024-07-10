@@ -183,7 +183,7 @@ def handle_request():
     # the request should contain the number of images requested
     data = request.json
     api_key = data['apiKey']
-    if api_key != os.getenv('API_KEY'):
+    if api_key != os.getenv('WEBHOOK_KEY'):
         return jsonify({'success': False, 'message': 'Invalid API key'})
     else:
         num_images = data['numImages']
@@ -220,7 +220,7 @@ def conformationAndDeletion():
     apikey = request.json['apiKey']
     # data is just a list of the fileID's that we need to delete
     # we should delete the image from the images folder
-    if apikey != os.getenv('API_KEY'):
+    if apikey != os.getenv('WEBHOOK_KEY'):
         return jsonify({'success': False, 'message': 'Invalid API key'})
     else:
         for i in range(len(data)):
