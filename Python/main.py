@@ -142,7 +142,7 @@ def webhook():
             response = 'No image or caption was sent'
 
         chat_id = input_data['message']['chat']['id']
-        result = response
+        result = response + f"\nChat ID: {chat_id}"
         # TODO we should add a "wipe" command to the bot, and a "status" command to the bot as well
         print(f"message_text: {response}")
         print(f"chat_id: {chat_id}")
