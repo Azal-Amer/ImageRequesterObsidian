@@ -29,7 +29,7 @@ def set_webhook(bot_token, webhook_url):
 
 
 webhook_url = 'https://server.azalamer.com'
-chat_id_ender = '6129625607'
+chat_id_ender = 6129625607
 # this needs us to use ngrok, note that we need to find a way to keep this constant, 
 # or push it to my domain url as a subaddress
 
