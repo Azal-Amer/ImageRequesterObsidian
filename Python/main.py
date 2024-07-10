@@ -182,27 +182,31 @@ def serve_index():
 def handle_request():
     # the request should contain the number of images requested
     data = request.json
-    num_images = data['numImages']
-    # remove .DS_Store file from list of images
-    responsePackage = {}
-    with open('imageCaptionDatabase.json', 'r') as f:
-        imageCaptionDatabase = json.load(f)
+    api_key = data['apiKey']
+    if api_key != os.getenv('API_KEY'):
+        return jsonify({'success': False, 'message': 'Invalid API key'})
+    else:
+        num_images = data['numImages']
+        # remove .DS_Store file from list of images
+        responsePackage = {}
+        with open('imageCaptionDatabase.json', 'r') as f:
+            imageCaptionDatabase = json.load(f)
 
-    if(num_images > len(imageCaptionDatabase)):
-        num_images = len(imageCaptionDatabase)
-    # this makes it so we can only accept the number of images we have to give
-    for i in range(num_images):
-        responsePackage[i] = imageCaptionDatabase[str(i)]
-    
+        if(num_images > len(imageCaptionDatabase)):
+            num_images = len(imageCaptionDatabase)
+        # this makes it so we can only accept the number of images we have to give
+        for i in range(num_images):
+            responsePackage[i] = imageCaptionDatabase[str(i)]
+        
 
-    response_data = {
-        'success': True,
-        'message': 'Image URLs retrieved successfully',
-        'imageUrls': imageCaptionDatabase,
-        'numImages': num_images
-    }
+        response_data = {
+            'success': True,
+            'message': 'Image URLs retrieved successfully',
+            'imageUrls': imageCaptionDatabase,
+            'numImages': num_images
+        }
 
-    return jsonify(response_data)
+        return jsonify(response_data)
 
 
 @app.route('/images/<path:filename>', methods=['GET'])
@@ -213,26 +217,30 @@ def serve_image(filename):
 @app.route('/confirmation',methods = ['POST'])
 def conformationAndDeletion():
     data = request.json['imageIDs']
+    apikey = request.json['apiKey']
     # data is just a list of the fileID's that we need to delete
     # we should delete the image from the images folder
-    for i in range(len(data)):
-        save_path = os.path.join(SAVE_DIRECTORY, f"{data[i]}.jpg")
-        os.remove(save_path)
-    # we should also delete the image from the imageCaptionDatabase
-    with open('imageCaptionDatabase.json', 'r') as f:
-        imageCaptionDatabase = json.load(f)
-    with open('imageCaptionDatabase.json', 'w') as f:
-        json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
+    if apikey != os.getenv('API_KEY'):
+        return jsonify({'success': False, 'message': 'Invalid API key'})
+    else:
+        for i in range(len(data)):
+            save_path = os.path.join(SAVE_DIRECTORY, f"{data[i]}.jpg")
+            os.remove(save_path)
+        # we should also delete the image from the imageCaptionDatabase
+        with open('imageCaptionDatabase.json', 'r') as f:
+            imageCaptionDatabase = json.load(f)
+        with open('imageCaptionDatabase.json', 'w') as f:
+            json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
 
-    send_message(chat_id_ender,'Images deleted successfully')
-    # 
-    # find the index in the database that has the fileID that we need to delete
-    
-    # upon reflection, while this is implicit, the only images that get served are the ones at the top, not the back. So if I want I can just delete the first n entries in the database and renumber
+        send_message(chat_id_ender,'Images deleted successfully')
+        # 
+        # find the index in the database that has the fileID that we need to delete
+        
+        # upon reflection, while this is implicit, the only images that get served are the ones at the top, not the back. So if I want I can just delete the first n entries in the database and renumber
 
-    
+        
 
-    return jsonify({'success':True,'message':'Image deleted successfully'})
+        return jsonify({'success':True,'message':'Image deleted successfully'})
 
 if __name__ == '__main__':
     print('Starting the Flask app')
