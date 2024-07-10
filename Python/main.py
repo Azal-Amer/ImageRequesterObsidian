@@ -145,6 +145,7 @@ def webhook():
         result = response
         # TODO we should add a "wipe" command to the bot, and a "status" command to the bot as well
         print(f"message_text: {response}")
+        print(f"chat_id: {chat_id}")
 
         # Send the result back to Telegram
         send_message(chat_id, result)
@@ -216,6 +217,8 @@ def conformationAndDeletion():
         imageCaptionDatabase = json.load(f)
     with open('imageCaptionDatabase.json', 'w') as f:
         json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
+    
+    # 
     
     # find the index in the database that has the fileID that we need to delete
     
