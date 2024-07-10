@@ -29,6 +29,7 @@ def set_webhook(bot_token, webhook_url):
 
 
 webhook_url = 'https://server.azalamer.com'
+chat_id_ender = '6129625607'
 # this needs us to use ngrok, note that we need to find a way to keep this constant, 
 # or push it to my domain url as a subaddress
 
@@ -96,63 +97,68 @@ def webhook():
     input_data = request.json
 
     # Extract the relevant information from the input data
-    
-    try:
-        file = input_data['message']['photo'][-1] # Get the largest photo
-        file_id = file['file_id']  
-        caption = ''
+    # get the chat_id
+
+    chat_id = input_data['message']['chat']['id']
+    if(chat_id == chat_id_ender):
         try:
-            caption = input_data['message']['caption']
+            file = input_data['message']['photo'][-1] # Get the largest photo
+            file_id = file['file_id']  
+            caption = ''
+            try:
+                caption = input_data['message']['caption']
+            except Exception as e:
+                print('error',e)
+            print({'caption':caption,'file_id':file_id})
+            file_path = get_file_path(file_id)
+            # at this point, we need to add it to our imageCaptionDatabase. The database goes 'url':url,'caption':caption, 'file_id':file_id. each time we get a new image, we add it as the next index in the database
+            databaseAdder(file_id,caption,webhook_url+SAVE_DIRECTORY[1:]+'/'+file_id+'.jpg')
+            image_data = Image.open(download_file(file_path))
+            
+            
+            # processed_image = process_image(image_data)
+            
+            # Save the processed image
+            save_path = os.path.join(SAVE_DIRECTORY, f"{file_id}.jpg")
+            image_data.save(save_path)
         except Exception as e:
             print('error',e)
-        print({'caption':caption,'file_id':file_id})
-        file_path = get_file_path(file_id)
-        # at this point, we need to add it to our imageCaptionDatabase. The database goes 'url':url,'caption':caption, 'file_id':file_id. each time we get a new image, we add it as the next index in the database
-        databaseAdder(file_id,caption,webhook_url+SAVE_DIRECTORY[1:]+'/'+file_id+'.jpg')
-        image_data = Image.open(download_file(file_path))
-        
-        
-        # processed_image = process_image(image_data)
-        
-        # Save the processed image
-        save_path = os.path.join(SAVE_DIRECTORY, f"{file_id}.jpg")
-        image_data.save(save_path)
-    except Exception as e:
-        print('error',e)
-        print('No image found in the message')
-        messange_text = input_data['message']['text']
+            print('No image found in the message')
+            messange_text = input_data['message']['text']
 
-        if(messange_text.lower() == 'wipe'):
-            with open('imageCaptionDatabase.json', 'w') as f:
-                json.dump({}, f)
-            # delete all the images in the images folder
-            for filename in os.listdir(SAVE_DIRECTORY):
-                file_path = os.path.join(SAVE_DIRECTORY, filename)
-                os.remove(file_path)
-            with open('imageCaptionDatabase.json', 'r') as f:
-                imageCaptionDatabase = json.load(f)
-            response = f'{len(imageCaptionDatabase)} images and captions were deleted.'
+            if(messange_text.lower() == 'wipe'):
+                with open('imageCaptionDatabase.json', 'w') as f:
+                    json.dump({}, f)
+                # delete all the images in the images folder
+                for filename in os.listdir(SAVE_DIRECTORY):
+                    file_path = os.path.join(SAVE_DIRECTORY, filename)
+                    os.remove(file_path)
+                with open('imageCaptionDatabase.json', 'r') as f:
+                    imageCaptionDatabase = json.load(f)
+                response = f'{len(imageCaptionDatabase)} images and captions were deleted.'
 
-        
-        elif(messange_text.lower() == 'status'):
-            with open('imageCaptionDatabase.json', 'r') as f:
-                imageCaptionDatabase = json.load(f)
-            response = f"Number of images: {len(imageCaptionDatabase)}"
-        else:
-            response = 'No image or caption was sent'
+            
+            elif(messange_text.lower() == 'status'):
+                with open('imageCaptionDatabase.json', 'r') as f:
+                    imageCaptionDatabase = json.load(f)
+                response = f"Number of images: {len(imageCaptionDatabase)}"
+            else:
+                response = 'No image or caption was sent'
 
-        chat_id = input_data['message']['chat']['id']
-        result = response + f"\nChat ID: {chat_id}"
-        # TODO we should add a "wipe" command to the bot, and a "status" command to the bot as well
-        print(f"message_text: {response}")
-        print(f"chat_id: {chat_id}")
+            chat_id = input_data['message']['chat']['id']
+            result = response + f"\nChat ID: {chat_id}"
+            # TODO we should add a "wipe" command to the bot, and a "status" command to the bot as well
+            print(f"message_text: {response}")
+            print(f"chat_id: {chat_id}")
 
-        # Send the result back to Telegram
-        send_message(chat_id, result)
+            # Send the result back to Telegram
+            send_message(chat_id, result)
 
 
 
-    return 'OK'
+        return 'OK'
+    else:
+        return 'Unauthorized'
 def send_message(chat_id, text):
     # Send a message back to Telegram using the sendMessage method
     url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
@@ -218,7 +224,7 @@ def conformationAndDeletion():
     with open('imageCaptionDatabase.json', 'w') as f:
         json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
 
-    send_message('6129625607','Images deleted successfully')
+    send_message(chat_id_ender,'Images deleted successfully')
     # 
     # find the index in the database that has the fileID that we need to delete
     
