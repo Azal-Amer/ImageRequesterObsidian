@@ -147,17 +147,19 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "image-requester:Replace Image Tags": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "sample-plugin:Replace Image Tags": false
+      "command-palette:Open command palette": false
     }
   },
   "active": "8ff73fa52a8b9780",
   "lastOpenFiles": [
+    "attachments/AgACAgEAAxkBAAPfZo39XFk6MWWM4wEuowrD0IwpqgcAAnStMRsJdXFEuMxYOjWQlo4BAAMCAAN5AAM1BA.jpg",
+    "attachments/AgACAgEAAxkBAAPeZo39VvrmfEn9b2TMbgtQYGzwkTQAAnatMRsJdXFE2Qr14wzPlv0BAAMCAAN5AAM1BA.jpg",
     "attachments/AgACAgEAAxkBAAPcZo30_aOwjusdlTCdW9pwNJ1ESY0AAnWtMRsJdXFENCb-2s0pFmIBAAMCAAN5AAM1BA.jpg",
     "attachments/AgACAgEAAxkBAAPYZo3ywofm9Um6bEbm3WSObFz_Ei4AAnGtMRsJdXFEDUPIE3YBS6ABAAMCAAN5AAM1BA.jpg",
     "attachments/AgACAgEAAxkBAAPUZo3k8Xg34fqT2rtOjw1KiLT65w8AAnGtMRsJdXFEDUPIE3YBS6ABAAMCAAN5AAM1BA.jpg",
@@ -168,8 +170,6 @@
     "attachments/AgACAgEAAxkBAAOiZo3M0xZp86wRLibRPlItjenRt5cAAkKsMRu5V2lEI0n21lAuqTUBAAMCAAN5AAM1BA.jpg",
     "attachments/AgACAgEAAxkBAAOhZo3MwiggG_P4WqSpFPedtKGqiNEAAmutMRsJdXFE1p015_hvgOUBAAMCAAN5AAM1BA.jpg",
     "attachments/AgACAgEAAxkBAAOUZozNK7DAQq-sJPgwPQl3VpknRMIAAkKsMRu5V2lEI0n21lAuqTUBAAMCAAN5AAM1BA.jpg",
-    "attachments/AgACAgEAAxkBAAOEZoua2KNMs0Z5S2ahrcQzZjTPlvsAAj6vMRuB_FlE1ti7_aON8wkBAAMCAAN5AAM1BA.jpg",
-    "attachments/AgACAgEAAxkBAANiZotJ_36SfgWJWjlnB5JEfJ2Zv8sAAiKvMRuB_FlE5lmWLbQvyhEBAAMCAAN5AAM1BA.jpg",
     "Untitled.md",
     "Welcome.md",
     "attachments"
