@@ -217,6 +217,8 @@ def conformationAndDeletion():
         imageCaptionDatabase = json.load(f)
     with open('imageCaptionDatabase.json', 'w') as f:
         json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
+
+    send_message(send_message,'Images deleted successfully')
     
     # 
     
