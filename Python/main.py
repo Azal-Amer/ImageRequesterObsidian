@@ -218,10 +218,8 @@ def conformationAndDeletion():
     with open('imageCaptionDatabase.json', 'w') as f:
         json.dump(renumber_dict_keys(imageCaptionDatabase,len(data)), f)
 
-    send_message(send_message,'Images deleted successfully')
-    
+    send_message('6129625607','Images deleted successfully')
     # 
-    
     # find the index in the database that has the fileID that we need to delete
     
     # upon reflection, while this is implicit, the only images that get served are the ones at the top, not the back. So if I want I can just delete the first n entries in the database and renumber
