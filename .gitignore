@@ -10,5 +10,8 @@ Sandbox Vault/.DS_Store
 Python/.env
 Python/.DS_Store
 Python/imageCaptionDatabase.json
+Python/images
+Python/testImages
+
 *.json
-*.md
+.DS_Store
